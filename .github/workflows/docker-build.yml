@@ -2,37 +2,58 @@ name: Build and Push Docker Images
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  ECR_WEBAPP_REPO: ${{ secrets.ECR_WEBAPP_REPO }}
+  ECR_MYSQL_REPO:  ${{ secrets.ECR_MYSQL_REPO }}
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-        aws-region: ${{ secrets.AWS_REGION }}
+      - name: Configure AWS credentials (supports session token)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id:     ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token:     ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region:            ${{ env.AWS_REGION }}
 
-    - name: Login to Amazon ECR
-      run: |
-        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{ secrets.ECR_WEBAPP_REPO }}
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
 
-    - name: Build and push Flask web app image
-      run: |
-        docker build -t clo835-webapp:latest .
-        docker tag clo835-webapp:latest ${{ secrets.ECR_WEBAPP_REPO }}:latest
-        docker push ${{ secrets.ECR_WEBAPP_REPO }}:latest
+      - name: Build & push webapp image
+        run: |
+          REGISTRY_HOST=$(echo "${ECR_WEBAPP_REPO}" | cut -d'/' -f1)
+          SHA="$(git rev-parse --short HEAD)"
 
-    - name: Build and push MySQL image
-      run: |
-        docker build -f Dockerfile_mysql -t clo835-mysql:latest .
-        docker tag clo835-mysql:latest ${{ secrets.ECR_MYSQL_REPO }}:latest
-        docker push ${{ secrets.ECR_MYSQL_REPO }}:latest
+          docker build -t webapp:latest .
+          docker tag webapp:latest "${ECR_WEBAPP_REPO}:latest"
+          docker tag webapp:latest "${ECR_WEBAPP_REPO}:${SHA}"
+
+          docker push "${ECR_WEBAPP_REPO}:latest"
+          docker push "${ECR_WEBAPP_REPO}:${SHA}"
+          echo "Pushed ${ECR_WEBAPP_REPO}:{latest,${SHA}}"
+
+      - name: Build & push mysql image
+        if: env.ECR_MYSQL_REPO != ''
+        run: |
+          REGISTRY_HOST=$(echo "${ECR_MYSQL_REPO}" | cut -d'/' -f1)
+          SHA="$(git rev-parse --short HEAD)"
+
+          docker build -f Dockerfile_mysql -t mysqlimg:latest .
+          docker tag mysqlimg:latest "${ECR_MYSQL_REPO}:latest"
+          docker tag mysqlimg:latest "${ECR_MYSQL_REPO}:${SHA}"
+
+          docker push "${ECR_MYSQL_REPO}:latest"
+          docker push "${ECR_MYSQL_REPO}:${SHA}"
+          echo "Pushed ${ECR_MYSQL_REPO}:{latest,${SHA}}"
