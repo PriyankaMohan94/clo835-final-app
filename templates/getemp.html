@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Get Employee Information</title>
+  {% if background_image %}
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      background-image: url('{{ background_image }}');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: {{ color }};
+    }
+    .tint {
+      background: rgba(255,255,255,0.8);
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: inline-block;
+    }
+  </style>
+  {% endif %}
+</head>
+<center>
+  <font color="black" size="5" style="font-family: avenir">
+    <h1 style="color: DodgerBlue">Employee Information</h1>
+    <body {% if not background_image %}style="background: {{ color }};"{% endif %}>
+      <div class="tint">
+        <form action="/fetchdata" autocomplete="on" method="POST">
+          <h2 style="color: grey">Enter Employee ID</h2>
+          Employee ID:<br>
+          <input style="height:25px;font-size:14pt;" type="number" name="emp_id" autofocus size="40"><br><br>
+          <button type="submit" style="background: grey; height: 45px; width: 200px; color: white; font:oblique;">FETCH INFO</button><br><br>
+        </form>
+      </div>
+    </body>
+  </font>
+</center>
+</html>

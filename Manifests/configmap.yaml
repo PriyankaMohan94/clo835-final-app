@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: fp
+data:
+  TEAM_NAME: "DataWarriors"
+  TEAM_SLOGAN: "Conquering Data, One Query at a Time!"
+  BACKGROUND_IMAGE_URL: "iron.jpg"
+  S3_BUCKET: "clo835-backgrounds-final"  # Update with actual bucket name
+  DBHOST: "mysql-service"
+  DBPORT: "3306"
+  DATABASE: "employees"

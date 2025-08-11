@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Employee Information</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      background-image: url('/static/iron.jpg'); /* your downloaded S3 image */
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: lime; /* fallback tint */
+    }
+    .tint {
+      background: rgba(255,255,255,0.75);
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: inline-block;
+    }
+  </style>
+  <link rel="icon" href="/static/favicon.ico">
+</head>
+<body>
+<center>
+  <font color="black" size="4" style="font-family: avenir">
+    <h1 style="color: DodgerBlue">Employee Database</h1>
+
+    <div class="tint">
+      <form action="/addemp" autocomplete="on" method="POST" enctype="multipart/form-data">
+        Employee ID:<br>
+        <input style="height:25px;font-size:14pt;color:grey;" type="number" name="emp_id" autofocus size="40"><br><br>
+
+        First Name:<br>
+        <input style="height:25px;font-size:14pt;color:grey;" type="text" name="first_name"><br><br>
+
+        Last Name:<br>
+        <input style="height:25px;font-size:14pt;color:grey;" type="text" name="last_name"><br><br>
+
+        Primary Skills:<br>
+        <input style="height:25px;font-size:14pt;color:grey;" type="text" name="primary_skill"><br><br>
+
+        Location:<br>
+        <input style="height:25px;font-size:14pt;color:grey;" type="text" name="location"><br><br>
+
+        <button type="submit" style="background: grey; height:45px; width:200px; color:white; font:oblique;">UPDATE DATABASE</button><br><br>
+        <button type="submit" formaction="/getemp" style="background: grey; height:45px; width:200px; color:white; font:oblique;">GET EMPLOYEE INFORMATION</button><br><br>
+      </form>
+    </div>
+
+    <br><a href="/about">About Us</a>
+  </font>
+</center>
+</body>
+</html>

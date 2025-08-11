@@ -1,0 +1,38 @@
+<!doctype html>
+<title>Hello from Flask</title>
+{% if background_image %}
+<style>
+  html, body { height: 100%; margin: 0; }
+  body {
+    background-image: url('{{ background_image }}');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: {{ color }};
+  }
+  .tint {
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border-radius: 12px;
+    padding: 16px 24px;
+    display: inline-block;
+    margin-top: 24px;
+  }
+</style>
+{% endif %}
+<body {% if not background_image %}style="background: {{ color }};"{% endif %}>
+</body>
+<div style="color: #e4e4e4; text-align: center; height: 90px; vertical-align: middle;">
+  <div class="tint">
+    {% if name %}
+      <h1>Hello from {{ name }}!</h1>
+    {% else %}
+      <h1>Hello From CLO835!</h1>
+    {% endif %}
+
+    {% if contents %}
+      <textarea rows="10" cols="50">{{ contents }}</textarea>
+    {% endif %}
+  </div>
+</div>
