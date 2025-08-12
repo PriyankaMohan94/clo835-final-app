@@ -1,35 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Employee Information</title>
+  <title>Employee Information</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      {% if background_image %}
+      background-image: url('{{ background_image }}');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      {% endif %}
+      background-color: {{ color }};
+    }
+    /* Team header styles */
+    .header {
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .team-name {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #FFD700; /* Gold color for team name */
+    }
+    .team-slogan {
+      font-size: 1.2em;
+      font-style: italic;
+      color: #E0E0E0;
+    }
+  </style>
 </head>
+<body>
 <center>
-	<font color="black" size="5" style="font-family: avenir">
+  <!-- Team Header -->
+  <div class="header">
+    <div class="team-name">{{ team_name }}</div>
+    <div class="team-slogan">{{ team_slogan }}</div>
+  </div>
 
-		<h1 style="color: DodgerBlue">Employee Information</h1>
-
-		<body style="background: {{ color }};">
-
-			<form>
-
-				<div>
-
-			  		Employee ID:<br> {{ id }} <br><br>
-
-			  		First Name:<br> {{ fname }} <br><br>
-
-			  		Last Name:<br> {{ lname }} <br><br>
-
-			  		Primary Interest:<br> {{ interest }} <br><br>
-
-			  		Location:<br> {{ location }} <br><br>
-			  		
-			  	</div>
-
-			</form>
-			<a href="{{ url_for('home') }}">Back</a>
-		</body>
-
-	</font>
+  <font color="black" size="5" style="font-family: avenir">
+    <h1 style="color: DodgerBlue">Employee Information</h1>
+    <form>
+      <div>
+        Employee ID:<br> {{ id }} <br><br>
+        First Name:<br> {{ fname }} <br><br>
+        Last Name:<br> {{ lname }} <br><br>
+        Primary Interest:<br> {{ interest }} <br><br>
+        Location:<br> {{ location }} <br><br>
+      </div>
+    </form>
+    <a href="{{ url_for('home') }}">Back</a>
+  </font>
 </center>
+</body>
 </html>

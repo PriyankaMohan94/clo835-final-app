@@ -2,15 +2,16 @@
 <html>
 <head>
   <title>Get Employee Information</title>
-  {% if background_image %}
   <style>
     html, body { height: 100%; margin: 0; }
     body {
+      {% if background_image %}
       background-image: url('{{ background_image }}');
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      {% endif %}
       background-color: {{ color }};
     }
     .tint {
@@ -19,22 +20,47 @@
       padding: 16px 24px;
       display: inline-block;
     }
+    /* Team header styles */
+    .header {
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .team-name {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #FFD700; /* Gold color for team name */
+    }
+    .team-slogan {
+      font-size: 1.2em;
+      font-style: italic;
+      color: #E0E0E0;
+    }
   </style>
-  {% endif %}
 </head>
+<body>
 <center>
+  <!-- Team Header -->
+  <div class="header">
+    <div class="team-name">{{ team_name }}</div>
+    <div class="team-slogan">{{ team_slogan }}</div>
+  </div>
+
   <font color="black" size="5" style="font-family: avenir">
     <h1 style="color: DodgerBlue">Employee Information</h1>
-    <body {% if not background_image %}style="background: {{ color }};"{% endif %}>
-      <div class="tint">
-        <form action="/fetchdata" autocomplete="on" method="POST">
-          <h2 style="color: grey">Enter Employee ID</h2>
-          Employee ID:<br>
-          <input style="height:25px;font-size:14pt;" type="number" name="emp_id" autofocus size="40"><br><br>
-          <button type="submit" style="background: grey; height: 45px; width: 200px; color: white; font:oblique;">FETCH INFO</button><br><br>
-        </form>
-      </div>
-    </body>
+    <div class="tint">
+      <form action="/fetchdata" autocomplete="on" method="POST">
+        <h2 style="color: grey">Enter Employee ID</h2>
+        Employee ID:<br>
+        <input style="height:25px;font-size:14pt;" type="number" name="emp_id" autofocus size="40"><br><br>
+        <button type="submit" style="background: grey; height: 45px; width: 200px; color: white; font:oblique;">FETCH INFO</button><br><br>
+      </form>
+    </div>
   </font>
 </center>
+</body>
 </html>

@@ -1,19 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-<center>
-	<font color="DodgerBlue" size="5" style="font-family: avenir">
-		<body style="background: {{ color }};">
-			<h1>The employee {{ name }} wassuccessfully added to the database</h1><br>
-			<h2>The Employee has been added to the database</h2><br>
-			<h2>{{ name }}</h2><br>
-			<title>Add Emp Output</title>
-			<a href="{{ url_for('home') }}">Back</a>
-		</body>
-	</font>
-</center>
+  <title>Add Emp Output</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      {% if background_image %}
+      background-image: url('{{ background_image }}');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      {% endif %}
+      background-color: {{ color }};
+    }
+    /* Team header styles */
+    .header {
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .team-name {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #FFD700; /* Gold color for team name */
+    }
+    .team-slogan {
+      font-size: 1.2em;
+      font-style: italic;
+      color: #E0E0E0;
+    }
+  </style>
 </head>
 <body>
+<center>
+  <!-- Team Header -->
+  <div class="header">
+    <div class="team-name">{{ team_name }}</div>
+    <div class="team-slogan">{{ team_slogan }}</div>
+  </div>
 
+  <font color="DodgerBlue" size="5" style="font-family: avenir">
+    <h1>The employee {{ name }} was successfully added to the database</h1><br>
+    <h2>The Employee has been added to the database</h2><br>
+    <h2>{{ name }}</h2><br>
+    <a href="{{ url_for('home') }}">Back</a>
+  </font>
+</center>
 </body>
 </html>

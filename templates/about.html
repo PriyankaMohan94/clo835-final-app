@@ -1,38 +1,70 @@
 <!doctype html>
-<title>Hello from Flask</title>
-{% if background_image %}
-<style>
-  html, body { height: 100%; margin: 0; }
-  body {
-    background-image: url('{{ background_image }}');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-color: {{ color }};
-  }
-  .tint {
-    background: rgba(0,0,0,0.5);
-    color: #fff;
-    border-radius: 12px;
-    padding: 16px 24px;
-    display: inline-block;
-    margin-top: 24px;
-  }
-</style>
-{% endif %}
-<body {% if not background_image %}style="background: {{ color }};"{% endif %}>
-</body>
-<div style="color: #e4e4e4; text-align: center; height: 90px; vertical-align: middle;">
-  <div class="tint">
-    {% if name %}
-      <h1>Hello from {{ name }}!</h1>
-    {% else %}
-      <h1>Hello From CLO835!</h1>
-    {% endif %}
-
-    {% if contents %}
-      <textarea rows="10" cols="50">{{ contents }}</textarea>
-    {% endif %}
+<html>
+<head>
+  <title>About Us</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      {% if background_image %}
+      background-image: url('{{ background_image }}');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      {% endif %}
+      background-color: {{ color }};
+    }
+    .tint {
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: inline-block;
+      margin-top: 24px;
+    }
+    /* Team header styles - same as addemp.html */
+    .header {
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .team-name {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #FFD700; /* Gold color for team name */
+    }
+    .team-slogan {
+      font-size: 1.2em;
+      font-style: italic;
+      color: #E0E0E0;
+    }
+  </style>
+</head>
+<body>
+<center>
+  <!-- Team Header -->
+  <div class="header">
+    <div class="team-name">{{ team_name }}</div>
+    <div class="team-slogan">{{ team_slogan }}</div>
   </div>
-</div>
+
+  <div style="color: #e4e4e4; text-align: center; height: 90px; vertical-align: middle;">
+    <div class="tint">
+      {% if name %}
+        <h1>Hello from {{ name }}!</h1>
+      {% else %}
+        <h1>Hello From CLO835!</h1>
+      {% endif %}
+
+      {% if contents %}
+        <textarea rows="10" cols="50">{{ contents }}</textarea>
+      {% endif %}
+    </div>
+  </div>
+</center>
+</body>
+</html>
